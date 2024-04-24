@@ -23,6 +23,10 @@ export function CreateNewTask() {
   })
 
   function handleCreateNewTask(data: CreateNewTaskFormData) {
+    if (data.task.description.length === 0) {
+      return
+    }
+
     setTasks((prev) => [...prev, data.task])
   }
 
@@ -65,8 +69,8 @@ export function CreateNewTask() {
             </div>
             <div className="flex items-center gap-2">
               <span className="font-bold text-purple-defaulf">Concluídas</span>
-              <span className="bg-gray-400 rounded-full w-6 text-center font-semibold">
-                0
+              <span className="bg-gray-400 rounded-full w-[55px] text-center font-semibold flex items-center justify-center gap-px">
+                {} <p>de</p> <p>{createdTasks}</p>
               </span>
             </div>
           </div>
@@ -94,7 +98,7 @@ export function CreateNewTask() {
                   checked={isCompleted}
                   onClick={() => setIsCompleted(!isCompleted)}
                   data-checked={isCompleted}
-                  className="flex items-center justify-center h-[20px] w-[20px] bg-trasparent border-2 border-solid border-blue-defaulf p-1 rounded-full data-[checked=true]:border-0 data-[checked=true]:bg-purple-defaulf"
+                  className="flex items-center justify-center h-[20px] w-[20px] bg-trasparent border-2 border-solid border-blue-defaulf p-1 rounded-full data-[checked=true]:text-line-through data-[checked=true]:border-0 data-[checked=true]:bg-purple-defaulf"
                 >
                   <Checkbox.Indicator className="font-semibold">
                     <Check />
