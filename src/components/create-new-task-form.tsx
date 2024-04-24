@@ -17,12 +17,18 @@ type CreateNewTaskFormData = z.infer<typeof createNewTaskFormSchema>
 export function CreateNewTask() {
   const { tasks, setTasks } = useContext(TasksContext)
   const [isCompleted, setIsCompleted] = useState(false)
+  const createdTasks = tasks.length
   const { register, handleSubmit } = useForm<CreateNewTaskFormData>({
     resolver: zodResolver(createNewTaskFormSchema),
   })
 
   function handleCreateNewTask(data: CreateNewTaskFormData) {
     setTasks((prev) => [...prev, data.task])
+  }
+
+  function removeTask(index: number) {
+    const novosItens = [...tasks.slice(0, index), ...tasks.slice(index + 1)]
+    setTasks(novosItens)
   }
 
   return (
@@ -54,7 +60,7 @@ export function CreateNewTask() {
                 Tarefas criadas
               </span>
               <span className="bg-gray-400 rounded-full w-6 text-center font-semibold">
-                0
+                {createdTasks}
               </span>
             </div>
             <div className="flex items-center gap-2">
@@ -97,7 +103,11 @@ export function CreateNewTask() {
 
                 <span>{task.description}</span>
 
-                <button className="hover:text-danger">
+                <button
+                  onClick={() => removeTask(i)}
+                  type="button"
+                  className="hover:text-danger"
+                >
                   <Trash size={20} />
                 </button>
               </div>
